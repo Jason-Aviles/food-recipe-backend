@@ -2,25 +2,18 @@
 
 module.exports = {
   development: {
-    client: "pg",
-    connection:'postgres://localhost/todos_test', useNullAsDefault: true,
+    client: "sqlite3",
+    connection: {
+      filename: "./database/foodie.db3"
+    }, useNullAsDefault: true,
     migrations: {
     directory: "./database/migrations"
   },
   seeds: {
     directory: "./database/seeds"
   },
-  },production: {
-    client: "pg",
-    connection:process.env.DATABASE_URL, useNullAsDefault: true,
-    migrations: {
-    directory: "./database/migrations"
   },
-  seeds: {
-    directory: "./database/seeds"
-  },
-  }
- ,
+ 
   
   pool: {
     afterCreate: (conn, done) => {
