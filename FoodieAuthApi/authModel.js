@@ -1,7 +1,8 @@
 const db = require("../database/dbConfig");
 
 module.exports = {
-  find_review,findBydetail,
+  find_review,
+  findBydetail,
   findById_review,
   insert_review,
   update_review,
@@ -20,24 +21,50 @@ module.exports = {
 };
 
 function findBydetail_id(id) {
+  return db("other")
+    .innerJoin("menu_item", "other.menu_id", "menu_item.id")
 
-  return db('other').innerJoin('menu_item','other.menu_id', "menu_item.id").select( 'menu_item.id', 'comments', 'price','item_name','food_rating','wait_time', 
-       'date_of_visit','photo_of_order')
-  .where('other.menu_id',id)
+    .select(
+      "menu_item.id",
+      "comments",
+      "price",
+      "item_name",
+      "food_rating",
+      "wait_time",
+      "review_id",
+      "date_of_visit",
+      "photo_of_order"
+    )
+    .where("other.menu_id", id);
 }
-
 
 function findBydetail() {
-
-  return db('other').innerJoin('menu_item','other.menu_id', "menu_item.id").select( 'menu_item.id', 'comments', 'price','item_name','food_rating','wait_time', 
-       'date_of_visit','photo_of_order')
- 
+  return db("other")
+    .innerJoin("menu_item", "other.menu_id", "menu_item.id")
+    .select(
+      "menu_item.id",
+      "comments",
+      "price",
+      "item_name",
+      "food_rating",
+      "wait_time",
+      "date_of_visit",
+      "photo_of_order"
+    );
 }
 
-
 function findMoreId(id) {
-  return db('menu_item_review').innerJoin('menu_item','menu_item_review.menu_id','menu_item.id').select('menu_item.id','restaurant_name', 'restaurant_type','item_name','food_rating','photo_of_order')   .where('menu_item_review.menu_id',id)
- 
+  return db("menu_item_review")
+    .innerJoin("menu_item", "menu_item_review.menu_id", "menu_item.id")
+    .select(
+      "menu_item.id",
+      "restaurant_name",
+      "restaurant_type",
+      "item_name",
+      "food_rating",
+      "photo_of_order"
+    )
+    .where("menu_item_review.menu_id", id);
 }
 function find_review() {
   return db("menu_item_review");
