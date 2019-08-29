@@ -1,13 +1,14 @@
 {
   "name": "backend-buildweek",
-  "version": "1.0.0","engines": {
+  "version": "1.0.0",
+  "engines": {
     "node": "8.16.0",
     "npm": "6.11.2"
   },
   "description": "user ={\r id,\r username,\r password\r }",
   "main": "index.js",
   "scripts": {
-    "start":"node index.js",
+    "start": "node index.js",
     "server": "nodemon index.js",
     "test": "jest --watch"
   },
@@ -20,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
+    "express": "^4.17.1",
     "helmet": "^3.20.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.19.2",
