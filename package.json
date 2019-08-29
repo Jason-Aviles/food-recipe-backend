@@ -1,6 +1,8 @@
 {
   "name": "backend-buildweek",
-  "version": "1.0.0",
+  "version": "1.0.0","engines": {
+    "node": "10.3.0"
+  },
   "description": "user ={\r id,\r username,\r password\r }",
   "main": "index.js",
   "scripts": {
