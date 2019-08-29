@@ -8,7 +8,17 @@ const router = express.Router();
 router.get("/foodie/:id", (req, res) => {
   const { id } = req.params;
 
-    db.findall(id).then(data =>
+    db.findBydetail_id(id).then(data =>
+      res.json({ loggedInUser: req.user.username, data })
+    );
+  
+});
+
+
+router.get("/foodie/", (req, res) => {
+
+
+    db.findBydetail().then(data =>
       res.json({ loggedInUser: req.user.username, data })
     );
   

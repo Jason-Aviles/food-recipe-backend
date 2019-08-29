@@ -1,12 +1,12 @@
 const db = require("../database/dbConfig");
 
 module.exports = {
-  find_review,
+  find_review,findBydetail,
   findById_review,
   insert_review,
   update_review,
   remove_review,
-  findall,
+  findBydetail_id,
   findById_menu,
   find_menu,
   insert_menu,
@@ -19,19 +19,26 @@ module.exports = {
   update_other
 };
 
-function findall(id) {
-  return db.raw(
-    `select  users.id,  restaurant_name, restaurant_type,item_name,food_rating
+function findBydetail_id(id) {
 
-     from menu_item_review
-     
-     join users on menu_item_review.user_id = users.id 
-     join menu_item on menu_item_review.user_id = menu_item.id 
-      where menu_item_review.user_id = ?`,
-    id
-  );
+  return db('other').innerJoin('menu_item','other.menu_id', "menu_item.id").select( 'menu_item.id', 'comments', 'price','item_name','food_rating','wait_time', 
+       'date_of_visit','photo_of_order')
+  .where('other.menu_id',id)
 }
 
+
+function findBydetail() {
+
+  return db('other').innerJoin('menu_item','other.menu_id', "menu_item.id").select( 'menu_item.id', 'comments', 'price','item_name','food_rating','wait_time', 
+       'date_of_visit','photo_of_order')
+ 
+}
+
+
+function findMoreId(id) {
+  return db('menu_item_review').innerJoin('menu_item','menu_item_review.menu_id','menu_item.id').select('menu_item.id','restaurant_name', 'restaurant_type','item_name','food_rating','photo_of_order')   .where('menu_item_review.menu_id',id)
+ 
+}
 function find_review() {
   return db("menu_item_review");
 }
