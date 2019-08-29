@@ -4,6 +4,7 @@
   "description": "user ={\r id,\r username,\r password\r }",
   "main": "index.js",
   "scripts": {
+    "start":"node index.js",
     "server": "nodemon index.js",
     "test": "jest --watch"
   },
