@@ -7,14 +7,14 @@ module.exports ={
 }
 
 
-function findBy(filter) {
-  return db('users').where(filter);
+async function findBy(filter) {
+  return await db('users').where(filter);
 }
 
 
 
-function add(item) {
-  return db("users")
+async function add(item) {
+  return await db("users")
     .insert(item)
     .then(ids => ({ id: ids[0] }));
 }

@@ -4,12 +4,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secret = require("../Secret/secret");
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const creds = req.body;
   const hash = bcrypt.hashSync(creds.password, 14);
   creds.password = hash;
   if (creds) {
-    db.add(creds)
+    await  db.add(creds)
       .then(user => {
         res.status(201).json(user);
       })
@@ -21,10 +21,10 @@ router.post("/register", (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   let { password, username } = req.body;
   if (password && username) {
-    db.findBy({ username })
+    await db.findBy({ username })
       .first() //takes first item out of object
       .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {

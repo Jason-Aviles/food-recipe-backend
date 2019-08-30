@@ -20,8 +20,8 @@ module.exports = {
   update_other
 };
 
-function findBydetail_id(id) {
-  return db("other")
+async function findBydetail_id(id) {
+  return await db("other")
     .innerJoin("menu_item", "other.menu_id", "menu_item.id")
 
     .select(
@@ -38,8 +38,8 @@ function findBydetail_id(id) {
     .where("other.menu_id", id);
 }
 
-function findBydetail() {
-  return db("other")
+async function findBydetail() {
+  return await db("other")
     .innerJoin("menu_item", "other.menu_id", "menu_item.id")
     .select(
       "menu_item.id",
@@ -53,8 +53,8 @@ function findBydetail() {
     );
 }
 
-function findMoreId(id) {
-  return db("menu_item_review")
+async function findMoreId(id) {
+  return await db("menu_item_review")
     .innerJoin("menu_item", "menu_item_review.menu_id", "menu_item.id")
     .select(
       "menu_item.id",
@@ -66,60 +66,60 @@ function findMoreId(id) {
     )
     .where("menu_item_review.menu_id", id);
 }
-function find_review() {
-  return db("menu_item_review");
+async  function find_review() {
+  return await db("menu_item_review");
 }
 
-function findById_review(id) {
-  return db("menu_item_review")
+async function findById_review(id) {
+  return await db("menu_item_review")
     .where({ id: Number(id) })
     .first();
 }
 
-function insert_review(user) {
-  return db("menu_item_review")
+async  function insert_review(user) {
+  return await db("menu_item_review")
     .insert(user)
     .then(ids => ({ id: ids[0] }));
 }
 
-function update_review(id, user) {
-  return db("menu_item_review")
+async function update_review(id, user) {
+  return await db("menu_item_review")
     .where("id", Number(id))
     .update(user);
 }
 
-function remove_review(id) {
-  return db("menu_item_review")
+async  function remove_review(id) {
+  return await db("menu_item_review")
     .where("id", Number(id))
     .del();
 }
 
 //menu item
 
-function find_menu() {
-  return db("menu_item");
+async function find_menu() {
+  return await db("menu_item");
 }
 
-function findById_menu(id) {
-  return db("menu_item")
+async function findById_menu(id) {
+  return await db("menu_item")
     .where({ id: Number(id) })
     .first();
 }
 
-function insert_menu(user) {
+async function insert_menu(user) {
   return db("menu_item")
     .insert(user)
     .then(ids => ({ id: ids[0] }));
 }
 
 function update_menu(id, user) {
-  return db("menu_item")
+  return await db("menu_item")
     .where("id", Number(id))
     .update(user);
 }
 
 function remove_menu(id) {
-  return db("menu_item")
+  return await db("menu_item")
     .where("id", Number(id))
     .del();
 }
@@ -127,29 +127,29 @@ function remove_menu(id) {
 //other
 
 function find_other() {
-  return db("other");
+  return await db("other");
 }
 
-function findById_other(id) {
-  return db("other")
+function fi awaitndById_other(id) {
+  return await db("other")
     .where({ id: Number(id) })
     .first();
 }
 
 function insert_other(user) {
-  return db("other")
+  return await db("other")
     .insert(user)
     .then(ids => ({ id: ids[0] }));
 }
 
 function update_other(id, user) {
-  return db("other")
+  return await db("other")
     .where("id", Number(id))
     .update(user);
 }
 
 function remove_other(id) {
-  return db("other")
+  return await db("other")
     .where("id", Number(id))
     .del();
 }
