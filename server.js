@@ -8,11 +8,18 @@ const detailPublic = require("./FoodiePublicApi/detailRouter")
 const authMiddleWare =require('./tokenMiddleWare/authenticate')
 const server = express();
 
-server.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+let allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
-});
+}
+server.configure(function() {
+  app.use(allowCrossDomain);
+  //some other code
+});    
+
+server.options('*', cors())
 
 server.use(helmet());
 server.use(cors());
