@@ -107,18 +107,18 @@ async function findById_menu(id) {
 }
 
 async function insert_menu(user) {
-  return db("menu_item")
+  return await db("menu_item")
     .insert(user)
     .then(ids => ({ id: ids[0] }));
 }
 
-function update_menu(id, user) {
+ async function update_menu(id, user) {
   return await db("menu_item")
     .where("id", Number(id))
     .update(user);
 }
 
-function remove_menu(id) {
+ async function remove_menu(id) {
   return await db("menu_item")
     .where("id", Number(id))
     .del();
@@ -126,29 +126,29 @@ function remove_menu(id) {
 
 //other
 
-function find_other() {
+ async function find_other() {
   return await db("other");
 }
 
-function fi awaitndById_other(id) {
+async function   findById_other(id) {
   return await db("other")
     .where({ id: Number(id) })
     .first();
 }
 
-function insert_other(user) {
+async function insert_other(user) {
   return await db("other")
     .insert(user)
     .then(ids => ({ id: ids[0] }));
 }
 
-function update_other(id, user) {
+async function update_other(id, user) {
   return await db("other")
     .where("id", Number(id))
     .update(user);
 }
 
-function remove_other(id) {
+async function remove_other(id) {
   return await db("other")
     .where("id", Number(id))
     .del();
