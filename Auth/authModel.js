@@ -12,9 +12,8 @@ async function findBy(filter) {
 }
 
 
-
-async function add(item) {
-  return await db("users")
+ function add(item) {
+   db("users")
     .insert(item)
     .then(ids => ({ id: ids[0] }));
 }

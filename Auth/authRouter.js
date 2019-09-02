@@ -21,10 +21,10 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login",  (req, res) => {
   let { password, username } = req.body;
   if (password && username) {
-    await db.findBy({ username })
+     db.findBy({ username })
       .first() //takes first item out of object
       .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {
