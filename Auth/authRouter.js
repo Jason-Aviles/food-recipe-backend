@@ -4,12 +4,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secret = require("../Secret/secret");
 
-router.post("/register", async (req, res) => {
+
+router.post("/register", (req, res) => {
   const creds = req.body;
   const hash = bcrypt.hashSync(creds.password, 14);
   creds.password = hash;
   if (creds) {
-    await  db.add(creds)
+    db.add(creds)
       .then(user => {
         res.status(201).json(user);
       })
@@ -20,6 +21,7 @@ router.post("/register", async (req, res) => {
     res.status(401).json({ message: "missing username and password" });
   }
 });
+
 
 router.post("/login",  (req, res) => {
   let { password, username } = req.body;

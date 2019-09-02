@@ -11,7 +11,6 @@ const detailPublic = require("./FoodiePublicApi/detailRouter");
 const authMiddleWare = require("./tokenMiddleWare/authenticate");
 const server = express();
 
-server.use(bodyParser.json());
 
 server.use(helmet());
 
@@ -19,7 +18,7 @@ server.use(helmet());
 
 
 
-server.use(morgan("combined"));
+//server.use(morgan("combined"));
 server.use(express.json());
 
 
@@ -27,7 +26,7 @@ server.use(express.json());
 
 
 server.use(cors());
-server.options("*", cors());
+// server.options("*", cors());
 
 server.use("/detail", detailPublic);
 server.use("/public", publicApi);
