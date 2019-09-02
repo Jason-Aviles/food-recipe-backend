@@ -11,24 +11,28 @@ const detailPublic = require("./FoodiePublicApi/detailRouter");
 const authMiddleWare = require("./tokenMiddleWare/authenticate");
 const server = express();
 
-var allowCrossDomain = function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3006/");
 
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-
-  next();
-};
-
-server.use(allowCrossDomain);
 
 server.use(bodyParser.json());
 
 server.use(helmet());
-server.use(cors());
 
-server.options("*", cors());
+
+
+
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+server.use(cors());
+server.options('*', cors());
+
+
+
+
+
+
 server.use(morgan("combined"));
 server.use(express.json());
 
