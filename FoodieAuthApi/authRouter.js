@@ -131,7 +131,7 @@ router.get("/other", async (req, res) => {
 });
 
 
-router.get("/menu/:id", async (req, res) => {
+router.get("/other/:id", async (req, res) => {
   const { id } = req.params;
 
    await db.findById_other(id).then(data =>
