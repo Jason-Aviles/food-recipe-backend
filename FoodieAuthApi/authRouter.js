@@ -30,6 +30,19 @@ router.get("/", async (req, res) => {
  await db.find_review().then(data => res.json({ loggedInUser: req.user.username, data }));
 });
 
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+   await db.findById_review(id).then(data =>
+      res.json({ loggedInUser: req.user.username, data })
+    );
+  
+});
+
+
+
+
 router.post("/", async (req, res) => {
   if (!req.body) {
     res.status(401).res.json({ message: "check your state in your form" });
@@ -62,13 +75,23 @@ router.put("/:id", async (req,res)=>{
 })
 
 
-
+//menu
 
 
 
 router.get("/menu", async (req, res) => {
  await db.find_menu().then(data => res.json(data));
 });
+
+router.get("/menu/:id", async (req, res) => {
+  const { id } = req.params;
+
+   await db.findById_menu(id).then(data =>
+      res.json({ loggedInUser: req.user.username, data })
+    );
+  
+});
+
 
 router.post("/menu", async (req, res) => {
   if (!req.body) {
@@ -106,6 +129,17 @@ router.put("/menu/:id", async (req,res)=>{
 router.get("/other", async (req, res) => {
  await db.find_other().then(data => res.json(data));
 });
+
+
+router.get("/menu/:id", async (req, res) => {
+  const { id } = req.params;
+
+   await db.findById_other(id).then(data =>
+      res.json({ loggedInUser: req.user.username, data })
+    );
+  
+});
+
 
 router.post("/other", async (req, res) => {
   if (!req.body) {
