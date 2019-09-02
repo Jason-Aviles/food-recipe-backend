@@ -26,7 +26,7 @@ server.use(express.json());
 
 
 
-server.use(cors({origin:"http://localhost:3006"}));
+server.use(cors());
 server.options("*", cors());
 
 server.use("/detail", detailPublic);
