@@ -19,15 +19,15 @@ server.use(helmet());
 
 
 
-
-
-server.use(cors({origin:"http://localhost:3006"}));
-server.options("*", cors());
-
 server.use(morgan("combined"));
 server.use(express.json());
 
 
+
+
+
+server.use(cors({origin:"http://localhost:3006"}));
+server.options("*", cors());
 
 server.use("/detail", detailPublic);
 server.use("/public", publicApi);
