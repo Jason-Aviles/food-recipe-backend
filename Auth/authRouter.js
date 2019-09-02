@@ -5,12 +5,12 @@ const jwt = require("jsonwebtoken");
 const secret = require("../Secret/secret");
 
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const creds = req.body;
   const hash = bcrypt.hashSync(creds.password, 14);
   creds.password = hash;
   if (creds) {
-    db.add(creds)
+   await db.add(creds)
       .then(user => {
         res.status(201).json(user);
       })
