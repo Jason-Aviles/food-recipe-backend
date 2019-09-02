@@ -15,6 +15,21 @@ server.use(bodyParser.json());
 
 server.use(helmet());
 
+
+
+server.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+
+  if (req.method == 'OPTIONS') {
+      res.send(200);
+  } else {
+      next();
+  }
+});
+
+
 server.use(function(req, res, next) {
   // Website you wish to allow to connect
   res.setHeader("Access-Control-Allow-Origin", "*");
