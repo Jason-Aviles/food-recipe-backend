@@ -21,7 +21,7 @@ server.use(helmet());
 
 
 
-app.use(cors({origin:"http://localhost:3006"}));
+server.use(cors({origin:"http://localhost:3006"}));
 server.options("*", cors());
 
 server.use(morgan("combined"));
