@@ -12,12 +12,32 @@ const server = express();
 server.options('*', cors())
 
 server.use(helmet());
-server.use(cors());
+server.use(cors({
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}));
 server.use(express.json());
 
-server.use("/detail", detailPublic);
- server.use("/public", publicApi);
-server.use("/auth", authUser);
+server.use("/detail",cors({
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}), detailPublic);
+ server.use("/public",cors({
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}),  publicApi);
+server.use("/auth",cors({
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}),  authUser);
 server.use("/auth/api",authMiddleWare, authApi);
 
 
