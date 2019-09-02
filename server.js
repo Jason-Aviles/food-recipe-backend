@@ -28,17 +28,14 @@ server.options("*", cors());
 server.use(morgan("combined"));
 server.use(express.json());
 
-server.use('*', function(req, res, next) {
+server.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-
-  if (req.method == 'OPTIONS') {
-      res.send(200);
-  } else {
-      next();
-  }
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'appid, X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
 });
+
 
 server.use("/detail", detailPublic);
 server.use("/public", publicApi);
