@@ -8,12 +8,12 @@ module.exports ={
 
 
  function findBy(filter) {
- return db('users').where(filter);
+ return db('user').where(filter);
 }
 
 
  function add(item) {
-  return  db("users")
+  return  db("user")
     .insert(item)
     .then(ids => ({ id: ids[0] }));
 }
