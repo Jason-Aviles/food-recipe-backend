@@ -34,7 +34,7 @@
 module.exports = {
   development: {
     client: 'pg',
-    connection:{host:'127.0.0.1',user:'postgres',password:'admin',database:'food'},
+    connection:{host:'postgresql-angular-55989',user:'postgres',password:'admin',database:'food'},
     migrations: {
       directory: './database/migrations'
     },
