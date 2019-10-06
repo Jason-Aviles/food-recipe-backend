@@ -2,7 +2,7 @@ const express = require("express");
 
 const db = require("./publicModel");
 
-const router = express.Router();
+const router = express.Router();  
 
 
 

@@ -2,9 +2,14 @@
 
 module.exports = {
   development: {
-    client: "sqlite3",
+    client: "pg",
+   
     connection: {
-      filename: "./database/foodie.db3"
+      host: '127.0.0.1',user:'postgres',password:'admin',
+      database:'food'
+
+
+   //   filename: "./database/foodie.db3" sqlite3
     }, useNullAsDefault: true,
     migrations: {
     directory: "./database/migrations"
