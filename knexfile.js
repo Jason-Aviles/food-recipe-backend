@@ -1,70 +1,67 @@
-// // Update with your config settings.
-
-// module.exports = {
-//   development: {
-//     client: "pg",
-   
-//     connection: {
-//       host: '127.0.0.1',user:'postgres',password:'admin',
-//       database:'food'
-
-
-//    //   filename: "./database/foodie.db3" sqlite3
-//     }, useNullAsDefault: true,
-//     migrations: {
-//     directory: "./database/migrations"
-//   },
-//   seeds: {
-//     directory: "./database/seeds"
-//   },
-//   },
- 
-  
-//   pool: {
-//     afterCreate: (conn, done) => {
-//       // runs after a connection is made to the sqlite engine
-//       conn.run("PRAGMA foreign_keys = ON", done); // turn on FK enforcement
-//     }
-//   }
-// };
-
-
-
 // Update with your config settings.
+require("dotenv").config();
+
 module.exports = {
   development: {
-    client: 'pg',
-    connection:{connectionString:process.env.DATABASE_URL,user:process.env.USER,password:process.env.PASSWORD,database:'food',ssl:true},
-    migrations: {
-      directory: './database/migrations'
-    },
-    seeds: {
-      directory: './database/seeds/'
-    },
-    useNullAsDefault: true
-  },
-
-  test: {
-    client: 'pg',
-    connection:'postgres://localhost/<examples_test>',
-    migrations: {
-      directory: './database/migrations'
-    },
-    seeds: {
-      directory: './database/seeds/'
+    client: "mysql",
+    connection: {
+      host:process.env.Host || "us-cdbr-iron-east-05.cleardb.net" ,
+      user:process.env.USER || "b672d74aec5a80",
+      password: process.env.PASSWORD || "f90f8ab7",
+      database: process.env.DATABASE || "heroku_1d5e0accbded54b",
+      insecureAuth : true,
+      charset: "utf8"
     },
     useNullAsDefault: true
   },
 
-  production: {
-    client: 'pg',
-    connection: process.env.DATABASE_URL,
-    migrations: {
-      directory: './db/migrations'
-    },
-    seeds: {
-      directory: './db/seeds/production'
-    },
-    useNullAsDefault: true
-  }
-}
+  // staging: {
+  //   client: "mysql",
+  //   connection: {
+  //     host: process.env.host,
+  //     user: process.env.user,
+  //     password: process.env.password,
+  //     database: "ig_clone",
+  //     charset: "utf8"
+  //   },
+  //   useNullAsDefault: true
+  // },
+  pool: {
+    min: 2,
+    max: 10
+  },
+  migrations: {
+    tableName: "knex_migrations"
+  },
+
+  // production: {
+  //   client: "mysql",
+  //   connection: {
+  //     host: process.env.host,
+  //     user: process.env.user,
+  //     password: process.env.password,
+  //     database: "ig_clone",
+  //     charset: "utf8"
+  //   },
+  //   useNullAsDefault: true,
+  //   pool: {
+  //     min: 2,
+  //     max: 10
+  //   },
+  //   migrations: {
+  //     tableName: "knex_migrations"
+  //   }
+  // }
+
+  // For local testing
+  // testing: {
+  //   client: "mysql",
+  //   connection: {
+  //     host: process.env.host,
+  //     user: process.env.user,
+  //     password: process.env.password,
+  //     database: "lambdaStaging",
+  //     charset: "utf8",
+  //   useNullAsDefault: true,
+  // }
+};
