@@ -31,6 +31,6 @@ server.use(cors());
 server.use("/detail", detailPublic);
 server.use("/public", publicApi);
 server.use("/auth", authUser);
-server.use("/auth/api", authMiddleWare, authApi);
+server.use("/auth/api",  authApi);
 
 module.exports = server;
