@@ -120,7 +120,7 @@ router.put("/menu/:id", async (req,res)=>{
     }else(res.status(400).json({errorMessage: "Please provide name and bio for the user."}))
   }) .catch(err => {
     res.status(500).json({ error: "The user information could not be modified." });
-  })
+  }).catch(err => json({message:"failed"}))
 
 })
 
