@@ -6,7 +6,7 @@ module.exports = {
     client: "mysql",
     connection: {
       host:process.env.Host || "us-cdbr-iron-east-05.cleardb.net" ,
-      user:process.env.USER || "b672d74aec5a80",
+      user:"b672d74aec5a80",
       password: process.env.PASSWORD || "f90f8ab7",
       database: process.env.DATABASE || "heroku_1d5e0accbded54b",
       insecureAuth : true,

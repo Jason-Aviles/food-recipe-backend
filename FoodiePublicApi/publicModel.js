@@ -10,7 +10,7 @@ function find() {
 
 
 function findbyId(id) {
-  return db('menu_item_review').innerJoin('menu_item','menu_item_review.menu_id','menu_item.id').select('menu_item.id','restaurant_name', 'restaurant_type','item_name','food_rating','photo_of_order')   .where('menu_item_review.menu_id',id)
+   return db('menu_item_review')//.innerJoin('menu_item','menu_item_review.menu_id','menu_item.id').select('menu_item.id','restaurant_name', 'restaurant_type','item_name','food_rating','photo_of_order')   .where('menu_item_review.menu_id',id)
  
 }
 
