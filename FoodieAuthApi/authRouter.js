@@ -88,6 +88,16 @@ router.post("/other", async (req, res) => {
   }
 });
 
+router.post("/validation", async (req, res) => {
+  if (!req.body) {
+    res.status(401).res.json({ message: "check your state in your form" });
+  } else {
+    await db.fulltable(req.body).then(data => res.json(data));
+  }
+});
+
+
+
 /////////////////////////del request//////////////////////////////////////
 
 router.delete("/:id", async (req, res) => {

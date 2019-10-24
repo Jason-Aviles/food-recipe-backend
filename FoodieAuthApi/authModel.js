@@ -17,7 +17,9 @@ module.exports = {
   find_other,
   insert_other,
   remove_other,
-  update_other
+  update_other,
+  fulltable
+
 };
 
 async function findBydetail_id(id) {
@@ -112,6 +114,13 @@ async function insert_menu(user) {
     .insert(user)
     .then(ids => ({ id: ids[0] }));
 }
+
+async function fulltable(user) {
+  return await db("fulltable")
+    .insert(user)
+    .then(ids => ({ id: ids[0] }));
+}
+
 
  async function update_menu(id, user) {
   return await db("menu_item")

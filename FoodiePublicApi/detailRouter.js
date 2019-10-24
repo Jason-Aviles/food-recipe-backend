@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 
-router.get("/", (req, res) => {
+router.get("/all/all", (req, res) => {
   db.findDetail().then(data => res.json(data));
 });
 
