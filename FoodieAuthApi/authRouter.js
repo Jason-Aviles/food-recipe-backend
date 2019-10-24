@@ -30,6 +30,16 @@ router.get("/menu", async (req, res) => {
 
 /////////////////////////get by id request//////////////////////////////////////
 
+router.get("/validate/:id", async (req, res) => {
+  const { id } = req.params;
+
+  await db
+    .findById_fulltable(id)
+    .then(data => res.json({ loggedInUser: req.user.username, data }));
+});
+
+
+
 router.get("/foodie/:id", async (req, res) => {
   const { id } = req.params;
 

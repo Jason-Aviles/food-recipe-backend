@@ -18,7 +18,8 @@ module.exports = {
   insert_other,
   remove_other,
   update_other,
-  fulltable
+  fulltable,
+  findById_fulltable
 
 };
 
@@ -72,11 +73,19 @@ async  function find_review() {
   return await db("menu_item_review");
 }
 
+
 async function findById_review(id) {
   return await db("menu_item_review")
     .where({ id: Number(id) })
     .first();
 }
+
+async function findById_fulltable(id) {
+  return await db("fulltable")
+    .where({ id: Number(id) })
+    .first();
+}
+
 
 
 async  function insert_review(user) {
