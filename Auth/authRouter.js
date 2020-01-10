@@ -11,12 +11,12 @@ router.post("/register", async (req, res) => {
   const hash = bcrypt.hashSync(creds.password, 14);
   creds.password = hash;
   if (creds) {
-   await db.add(creds)
+   return await db.add(creds)
       .then(user => {
         res.status(201).json(user);
       })
       .catch(error => {
-        res.status(500).json({ message: "failed to add user" });
+        res.status(500).json({ message: "failed to add user" + error });
       });
   } else {
     res.status(401).json({ message: "missing username and password" });
@@ -26,20 +26,21 @@ router.post("/register", async (req, res) => {
 
 router.post("/login",  (req, res) => {
   let { password, username } = req.body;
+  console.log(req.body)
   if (password && username) {
-     db.findBy({ username })
+   return   db.findBy({ username })
       .first() //takes first item out of object
       .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {
           const token = generateToken(user);
-
+console.log(user)
           res.status(200).json({ message: `Hello ${user.username}`, token,id:user.id });
         } else {
           res.status(401).json({ message: "invalid login info" });
         }
       })
       .catch(error => {
-        res.status(500).json({ message: "you messed up, login failed" });
+        res.status(500).json({ message: "you messed up, login failed" + error });
       });
   } else {
     res.status(401).json({ message: "missing username or password" });

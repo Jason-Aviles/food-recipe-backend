@@ -27,7 +27,7 @@ server.use(express.json());
 
 server.use(cors());
 // server.options("*", cors());
-
+server.use('/uploads',express.static('uploads'))
 server.use("/public", detailPublic);
 // server.use("/public", publicApi);
 server.use("/auth", authUser);
