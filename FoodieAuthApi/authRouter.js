@@ -39,27 +39,58 @@ const upload = multer({
 const router = express.Router();
 
 router.get("/foodie", async (req, res) => {
-  return await db
-    .findBydetail()
-    .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
+let data = db.findBydetail()
+try {
+  res.json({ loggedInUser: req.user.username, data  })
+} catch (error) {
+  res.status(500).json({message:error})
+}
+
+
+
+  // return await db
+  //   .findBydetail()
+  //   .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 router.get("/", async (req, res) => {
-  return await db
-    .find_review()
-    .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
+  let data = db.find_review()
+  try {
+    res.json({ loggedInUser: req.user.username, data })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+  // return await db
+  //   .find_review()
+  //   .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 router.get("/other", async (req, res) => {
-  return  await db
-    .find_other()
-    .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
+
+  let data = db.find_other()
+  try {
+    res.json({ loggedInUser: req.user.username, data })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+
+  // return  await db
+  //   .find_other()
+  //   .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 router.get("/menu", async (req, res) => {
-  return  await db
-    .find_menu()
-    .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
+
+  let data = db.find_menu()
+  try {
+    res.json({ loggedInUser: req.user.username, data })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+
+  // return  await db
+  //   .find_menu()
+  //   .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 /////////////////////////get by id request//////////////////////////////////////
@@ -67,9 +98,17 @@ router.get("/menu", async (req, res) => {
 router.get("/validate/:id", async (req, res) => {
   const { id } = req.params;
 
-  return await db
-    .findById_fulltable(id)
-    .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
+  let data = db.findById_fulltable(id)
+  try {
+    res.json({ loggedInUser: req.user.username, data })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+
+
+  // return await db
+  //   .findById_fulltable(id)
+  //   .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 
@@ -77,67 +116,146 @@ router.get("/validate/:id", async (req, res) => {
 router.get("/foodie/:id", async (req, res) => {
   const { id } = req.params;
 
-  return await db
-    .findBydetail_id(id)
-    .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
+  let data = db.findBydetail_id(id)
+  try {
+    res.json({ loggedInUser: req.user.username, data })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+
+
+  // return await db
+  //   .findBydetail_id(id)
+  //   .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
- return await db
-    .findById_review(id)
-    .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
+  let data = db.findById_review(id)
+  try {
+    res.json({ loggedInUser: req.user.username, data })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+
+
+//  return await db
+//     .findById_review(id)
+//     .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 router.get("/menu/:id", async (req, res) => {
   const { id } = req.params;
+let data= db.findById_menu(id)
+  try {
+    res.json({ loggedInUser: req.user.username, data })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
 
- return await db
-    .findById_menu(id)
-    .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
+//  return await db
+//     .findById_menu(id)
+//     .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 router.get("/other/:id", async (req, res) => {
   const { id } = req.params;
+let data = db.findById_other(id)
+  try {
+    res.json({ loggedInUser: req.user.username, data })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
 
- return await db
-    .findById_other(id)
-    .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
+//  return await db
+//     .findById_other(id)
+//     .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 /////////////////////////post request//////////////////////////////////////
 
 router.post("/", async (req, res) => {
-  if (!req.body) {
-  return  res.status(401).res.json({ message: "check your state in your form" });
-  } else {
-   return await db.insert_review(req.body).then(data => res.json(data)).catch(err => console.log(err));
+let data = db.insert_review(req.body)
+  try {
+    if (!req.body) {
+        res.status(401).res.json({ message: "check your state in your form" });
+      } else {
+       res.status(201).json(data)
+      }
+  } catch (error) {
+    res.status(500).json({message:error})
   }
+
+  // if (!req.body) {
+  // return  res.status(401).res.json({ message: "check your state in your form" });
+  // } else {
+  //  return await db.insert_review(req.body).then(data => res.json(data)).catch(err => console.log(err));
+  // }
+
 });
 
 router.post("/menu", async (req, res) => {
-  if (!req.body) {
- return   res.status(401).res.json({ message: "check your state in your form" });
-  } else {
-  return  await db.insert_menu(req.body).then(data => res.json(data)).catch(err => console.log(err));
+
+  let data = db.insert_menu(req.body)
+  try {
+    if (!req.body) {
+        res.status(401).res.json({ message: "check your state in your form" });
+      } else {
+       res.status(201).json(data)
+      }
+  } catch (error) {
+    res.status(500).json({message:error})
   }
+
+
+
+//   if (!req.body) {
+//  return   res.status(401).res.json({ message: "check your state in your form" });
+//   } else {
+//   return  await db.insert_menu(req.body).then(data => res.json(data)).catch(err => console.log(err));
+//   }
 });
 
 router.post("/other", async (req, res) => {
-  if (!req.body) {
-  return  res.status(401).res.json({ message: "check your state in your form" }).catch(err => console.log(err));
-  } else {
-  return  await db.insert_other(req.body).then(data => res.json(data)).catch(err => console.log(err));
+
+  let data = db.insert_other(req.body)
+  try {
+    if (!req.body) {
+        res.status(401).res.json({ message: "check your state in your form" });
+      } else {
+       res.status(201).json(data)
+      }
+  } catch (error) {
+    res.status(500).json({message:error})
   }
+
+
+  // if (!req.body) {
+  // return  res.status(401).res.json({ message: "check your state in your form" }).catch(err => console.log(err));
+  // } else {
+  // return  await db.insert_other(req.body).then(data => res.json(data)).catch(err => console.log(err));
+  // }
 });
 
 router.post("/validation", async (req, res) => {
-  if (!req.body) {
-  return  res.status(401).res.json({ message: "check your state in your form" });
-  } else {
-  return  await db.fulltable(req.body).then(data => res.json(data)).catch(err => console.log(err));
+
+  let data = db.fulltable(req.body)
+  try {
+    if (!req.body) {
+        res.status(401).res.json({ message: "check your state in your form" });
+      } else {
+       res.status(201).json(data)
+      }
+  } catch (error) {
+    res.status(500).json({message:error})
   }
+
+  // if (!req.body) {
+  // return  res.status(401).res.json({ message: "check your state in your form" });
+  // } else {
+  // return  await db.fulltable(req.body).then(data => res.json(data)).catch(err => console.log(err));
+  // }
 });
 
 
@@ -146,28 +264,72 @@ router.post("/validation", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params.id;
-  if (!id) {
-  return  res.status(401).res.json({ message: "no id" });
-  } else {
-  return  await db.remove_review(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
+
+  let data = db.remove_review(id)
+  try {
+    if (!id) {
+        res.status(401).res.json({ message: "no id" });
+      } else {
+       res.status(201).json(data)
+      }
+  } catch (error) {
+    res.status(500).json({message:error})
   }
+
+
+  // if (!id) {
+  // return  res.status(401).res.json({ message: "no id" });
+  // } else {
+  // return  await db.remove_review(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
+  // }
 });
 router.delete("/menu/:id", async (req, res) => {
   const { id } = req.params.id;
-  if (!id) {
- return   res.status(401).res.json({ message: "no id" });
-  } else {
-  return  await db.remove_menu(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
+
+
+  let data = db.remove_menu(id)
+  try {
+    if (!id) {
+        res.status(401).res.json({ message: "no id" });
+      } else {
+       res.status(201).json(data)
+      }
+  } catch (error) {
+    res.status(500).json({message:error})
   }
+
+
+
+
+//   if (!id) {
+//  return   res.status(401).res.json({ message: "no id" });
+//   } else {
+//   return  await db.remove_menu(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
+//   }
 });
 
 router.delete("/other/:id", async (req, res) => {
+  
   const { id } = req.params.id;
-  if (!id) {
-  return  res.status(401).res.json({ message: "no id" });
-  } else {
-   return await db.remove_other(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
+
+  let data = db.remove_other(id)
+  try {
+    if (!id) {
+        res.status(401).res.json({ message: "no id" });
+      } else {
+       res.status(201).json(data)
+      }
+  } catch (error) {
+    res.status(500).json({message:error})
   }
+
+
+
+  // if (!id) {
+  // return  res.status(401).res.json({ message: "no id" });
+  // } else {
+  //  return await db.remove_other(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
+  // }
 });
 
 /////////////////////////put request//////////////////////////////////////
@@ -175,61 +337,104 @@ router.delete("/other/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const body = req.body;
-  await db
-    .update_review(id, body)
-    .then(update => {
-      if (id) {
-     return   res.status(200).json(update);
-      } else
-      return  res
-          .status(400)
-          .json({ errorMessage: "Please provide name and bio for the user." });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: "The user information could not be modified." });
-    });
+ 
+let update = db.update_review(id,body)
+try {
+  if (id) {
+         res.status(200).json(update);
+        }else{  res
+                  .status(400)
+           .json({ errorMessage: "Please provide look at the state for the user." });     }
+} catch (error) {
+  res.status(500).json({message:error})
+}
+
+
+
+  // await db
+  //   .update_review(id, body)
+  //   .then(update => {
+  //     if (id) {
+  //    return   res.status(200).json(update);
+  //     } else
+  //     return  res
+  //         .status(400)
+  //         .json({ errorMessage: "Please provide name and bio for the user." });
+  //   })
+  //   .catch(err => {
+  //     res
+  //       .status(500)
+  //       .json({ error: "The user information could not be modified." });
+  //   });
 });
 
 router.put("/menu/:id", async (req, res) => {
   const { id } = req.params;
   const body = req.body;
-  await db
-    .update_menu(id, body)
-    .then(update => {
-      if (id) {
-      return  res.status(200).json(update);
-      } else
-     return   res
-          .status(400)
-          .json({ errorMessage: "Please provide name and bio for the user." });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: "The user information could not be modified." });
-    });
+
+  let update = db.update_review(id,body)
+  try {
+    if (id) {
+           res.status(200).json(update);
+          }else{  res
+                    .status(400)
+             .json({ errorMessage: "Please provide look at the state for the user." });     }
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+
+
+  // await db
+  //   .update_menu(id, body)
+  //   .then(update => {
+  //     if (id) {
+  //     return  res.status(200).json(update);
+  //     } else
+  //    return   res
+  //         .status(400)
+  //         .json({ errorMessage: "Please provide name and bio for the user." });
+  //   })
+  //   .catch(err => {
+  //     res
+  //       .status(500)
+  //       .json({ error: "The user information could not be modified." });
+  //   });
 });
 
 router.put("/other/:id", async (req, res) => {
   const { id } = req.params;
   const body = req.body;
- return await db
-    .update_other(id, body)
-    .then(update => {
-      if (id) {
-        res.status(200).json(update);
-      } else
-        res
-          .status(400)
-          .json({ errorMessage: "Please provide name and bio for the user." });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: "The user information could not be modified." });
-    });
+
+
+  let update = db.update_review(id,body)
+  try {
+    if (id) {
+           res.status(200).json(update);
+          }else{  res
+                    .status(400)
+             .json({ errorMessage: "Please provide look at the state for the user." });     }
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+
+
+
+
+//  return await db
+//     .update_other(id, body)
+//     .then(update => {
+//       if (id) {
+//         res.status(200).json(update);
+//       } else
+//         res
+//           .status(400)
+//           .json({ errorMessage: "Please provide name and bio for the user." });
+//     })
+//     .catch(err => {
+//       res
+//         .status(500)
+//         .json({ error: "The user information could not be modified." });
+//     });
 });
 
 //menu

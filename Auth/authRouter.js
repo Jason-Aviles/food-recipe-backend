@@ -7,17 +7,20 @@ const secret = require("../Secret/secret");
 
 router.post("/register", async (req, res) => {
   const creds = req.body;
-  console.log(creds)
+  console.log(creds,"user")
   const hash = bcrypt.hashSync(creds.password, 14);
   creds.password = hash;
+   
   if (creds) {
-   return await db.add(creds)
-      .then(user => {
-        res.status(201).json(user);
-      })
-      .catch(error => {
-        res.status(500).json({ message: "failed to add user" + error });
-      });
+    try{ res.status(201).json(db.add(creds))}
+    catch(error){  res.status(500).json({ message:  error });}
+  //  return await db.add(creds)
+  //     .then(user => {
+  //       res.status(201).json(user);
+  //     })
+  //     .catch(error => {
+  //       res.status(500).json({ message:  error });
+  //     });
   } else {
     res.status(401).json({ message: "missing username and password" });
   }
@@ -33,7 +36,7 @@ router.post("/login",  (req, res) => {
       .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {
           const token = generateToken(user);
-console.log(user)
+
           res.status(200).json({ message: `Hello ${user.username}`, token,id:user.id });
         } else {
           res.status(401).json({ message: "invalid login info" });
