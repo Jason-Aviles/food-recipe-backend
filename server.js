@@ -11,8 +11,7 @@ const detailPublic = require("./FoodiePublicApi/detailRouter");
 const authMiddleWare = require("./tokenMiddleWare/authenticate");
 const server = express();
 
-server.use(cors());
-// server.options("*", cors());
+
 server.use(helmet());
 
 
@@ -26,7 +25,8 @@ server.use(express.json());
 
 
 
-
+server.use(cors());
+// server.options("*", cors());
 
 
 server.use('/uploads',express.static('uploads'))
