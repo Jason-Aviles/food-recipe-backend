@@ -38,8 +38,10 @@ const upload = multer({
 
 const router = express.Router();
 
-router.get("/foodie", async (req, res) => {
-let data = db.findBydetail()
+router.get("/foodie/:id", async (req, res) => {
+let id = req.params.id
+
+let data = await db.findBydetail_id(id)
 try {
   res.json({ loggedInUser: req.user.username, data  })
 } catch (error) {
@@ -54,7 +56,8 @@ try {
 });
 
 router.get("/", async (req, res) => {
-  let data = db.find_review()
+  let data = await  db.find_review()
+  console.log(data,'here')
   try {
     res.json({ loggedInUser: req.user.username, data })
   } catch (error) {
@@ -67,7 +70,7 @@ router.get("/", async (req, res) => {
 
 router.get("/other", async (req, res) => {
 
-  let data = db.find_other()
+  let data = await  db.find_other()
   try {
     res.json({ loggedInUser: req.user.username, data })
   } catch (error) {
@@ -81,8 +84,9 @@ router.get("/other", async (req, res) => {
 
 router.get("/menu", async (req, res) => {
 
-  let data = db.find_menu()
+  let data = await db.find_menu()
   try {
+    console.log(data)
     res.json({ loggedInUser: req.user.username, data })
   } catch (error) {
     res.status(500).json({message:error})
@@ -98,7 +102,7 @@ router.get("/menu", async (req, res) => {
 router.get("/validate/:id", async (req, res) => {
   const { id } = req.params;
 
-  let data = db.findById_fulltable(id)
+  let data =await  db.findById_fulltable(id)
   try {
     res.json({ loggedInUser: req.user.username, data })
   } catch (error) {
@@ -116,7 +120,7 @@ router.get("/validate/:id", async (req, res) => {
 router.get("/foodie/:id", async (req, res) => {
   const { id } = req.params;
 
-  let data = db.findBydetail_id(id)
+  let data =await  db.findBydetail_id(id)
   try {
     res.json({ loggedInUser: req.user.username, data })
   } catch (error) {
@@ -132,7 +136,7 @@ router.get("/foodie/:id", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  let data = db.findById_review(id)
+  let data = await db.findById_review(id)
   try {
     res.json({ loggedInUser: req.user.username, data })
   } catch (error) {
@@ -147,7 +151,7 @@ router.get("/:id", async (req, res) => {
 
 router.get("/menu/:id", async (req, res) => {
   const { id } = req.params;
-let data= db.findById_menu(id)
+let data= await db.findById_menu(id)
   try {
     res.json({ loggedInUser: req.user.username, data })
   } catch (error) {
@@ -161,7 +165,7 @@ let data= db.findById_menu(id)
 
 router.get("/other/:id", async (req, res) => {
   const { id } = req.params;
-let data = db.findById_other(id)
+let data = await db.findById_other(id)
   try {
     res.json({ loggedInUser: req.user.username, data })
   } catch (error) {
@@ -176,7 +180,7 @@ let data = db.findById_other(id)
 /////////////////////////post request//////////////////////////////////////
 
 router.post("/", async (req, res) => {
-let data = db.insert_review(req.body)
+let data = await db.insert_review(req.body)
   try {
     if (!req.body) {
         res.status(401).res.json({ message: "check your state in your form" });
@@ -190,14 +194,14 @@ let data = db.insert_review(req.body)
   // if (!req.body) {
   // return  res.status(401).res.json({ message: "check your state in your form" });
   // } else {
-  //  return await db.insert_review(req.body).then(data => res.json(data)).catch(err => console.log(err));
+  //  return await await db.insert_review(req.body).then(data => res.json(data)).catch(err => console.log(err));
   // }
 
 });
 
 router.post("/menu", async (req, res) => {
 
-  let data = db.insert_menu(req.body)
+  let data = await db.insert_menu(req.body)
   try {
     if (!req.body) {
         res.status(401).res.json({ message: "check your state in your form" });
@@ -213,13 +217,13 @@ router.post("/menu", async (req, res) => {
 //   if (!req.body) {
 //  return   res.status(401).res.json({ message: "check your state in your form" });
 //   } else {
-//   return  await db.insert_menu(req.body).then(data => res.json(data)).catch(err => console.log(err));
+//   return  await await db.insert_menu(req.body).then(data => res.json(data)).catch(err => console.log(err));
 //   }
 });
 
 router.post("/other", async (req, res) => {
 
-  let data = db.insert_other(req.body)
+  let data = await db.insert_other(req.body)
   try {
     if (!req.body) {
         res.status(401).res.json({ message: "check your state in your form" });
@@ -234,13 +238,14 @@ router.post("/other", async (req, res) => {
   // if (!req.body) {
   // return  res.status(401).res.json({ message: "check your state in your form" }).catch(err => console.log(err));
   // } else {
-  // return  await db.insert_other(req.body).then(data => res.json(data)).catch(err => console.log(err));
+  // return  await await db.insert_other(req.body).then(data => res.json(data)).catch(err => console.log(err));
   // }
 });
 
 router.post("/validation", async (req, res) => {
 
-  let data = db.fulltable(req.body)
+  let data = await db.fulltable(req.body)
+  console.log(req.body)
   try {
     if (!req.body) {
         res.status(401).res.json({ message: "check your state in your form" });
@@ -254,7 +259,7 @@ router.post("/validation", async (req, res) => {
   // if (!req.body) {
   // return  res.status(401).res.json({ message: "check your state in your form" });
   // } else {
-  // return  await db.fulltable(req.body).then(data => res.json(data)).catch(err => console.log(err));
+  // return  await await db.fulltable(req.body).then(data => res.json(data)).catch(err => console.log(err));
   // }
 });
 
@@ -265,7 +270,7 @@ router.post("/validation", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params.id;
 
-  let data = db.remove_review(id)
+  let data = await db.remove_review(id)
   try {
     if (!id) {
         res.status(401).res.json({ message: "no id" });
@@ -280,14 +285,14 @@ router.delete("/:id", async (req, res) => {
   // if (!id) {
   // return  res.status(401).res.json({ message: "no id" });
   // } else {
-  // return  await db.remove_review(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
+  // return  await await db.remove_review(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
   // }
 });
 router.delete("/menu/:id", async (req, res) => {
   const { id } = req.params.id;
 
 
-  let data = db.remove_menu(id)
+  let data = await db.remove_menu(id)
   try {
     if (!id) {
         res.status(401).res.json({ message: "no id" });
@@ -304,7 +309,7 @@ router.delete("/menu/:id", async (req, res) => {
 //   if (!id) {
 //  return   res.status(401).res.json({ message: "no id" });
 //   } else {
-//   return  await db.remove_menu(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
+//   return  await await db.remove_menu(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
 //   }
 });
 
@@ -312,7 +317,7 @@ router.delete("/other/:id", async (req, res) => {
   
   const { id } = req.params.id;
 
-  let data = db.remove_other(id)
+  let data = await db.remove_other(id)
   try {
     if (!id) {
         res.status(401).res.json({ message: "no id" });
@@ -328,7 +333,7 @@ router.delete("/other/:id", async (req, res) => {
   // if (!id) {
   // return  res.status(401).res.json({ message: "no id" });
   // } else {
-  //  return await db.remove_other(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
+  //  return await await db.remove_other(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
   // }
 });
 
@@ -338,7 +343,7 @@ router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const body = req.body;
  
-let update = db.update_review(id,body)
+let update = await db.update_review(id,body)
 try {
   if (id) {
          res.status(200).json(update);
@@ -372,7 +377,7 @@ router.put("/menu/:id", async (req, res) => {
   const { id } = req.params;
   const body = req.body;
 
-  let update = db.update_review(id,body)
+  let update = await db.update_review(id,body)
   try {
     if (id) {
            res.status(200).json(update);
@@ -406,7 +411,7 @@ router.put("/other/:id", async (req, res) => {
   const body = req.body;
 
 
-  let update = db.update_review(id,body)
+  let update = await db.update_review(id,body)
   try {
     if (id) {
            res.status(200).json(update);
@@ -441,7 +446,7 @@ router.put("/other/:id", async (req, res) => {
 
 // router.get("/menu", async (req, res) => {
 //   console.log(req.body);
-//   await db.find_menu().then(data => res.json(data));
+//   await await db.find_menu().then(data => res.json(data));
 // });
 
 // router.get("/menu/:id", async (req, res) => {
@@ -456,7 +461,7 @@ router.put("/other/:id", async (req, res) => {
 //   if (!req.body) {
 //     res.status(401).res.json({ message: "check your state in your form" });
 //   } else {
-//     await db.insert_menu(req.body).then(data => res.json(data));
+//     await await db.insert_menu(req.body).then(data => res.json(data));
 //   }
 // });
 
@@ -465,7 +470,7 @@ router.put("/other/:id", async (req, res) => {
 //   if (!id) {
 //     res.status(401).res.json({ message: "no id" });
 //   } else {
-//     await db.remove_menu(id).then(data => res.status(201).res.json(data));
+//     await await db.remove_menu(id).then(data => res.status(201).res.json(data));
 //   }
 // });
 
@@ -493,7 +498,7 @@ router.put("/other/:id", async (req, res) => {
 // //other
 
 // router.get("/other", async (req, res) => {
-//   await db.find_other().then(data => res.json(data));
+//   await await db.find_other().then(data => res.json(data));
 // });
 
 // router.get("/other/:id", async (req, res) => {
@@ -508,7 +513,7 @@ router.put("/other/:id", async (req, res) => {
 //   if (!req.body) {
 //     res.status(401).res.json({ message: "check your state in your form" });
 //   } else {
-//     await db.insert_other(req.body).then(data => res.json(data));
+//     await await db.insert_other(req.body).then(data => res.json(data));
 //   }
 // });
 

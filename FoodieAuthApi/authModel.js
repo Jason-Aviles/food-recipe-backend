@@ -20,41 +20,40 @@ module.exports = {
   update_other,
   fulltable,
   findById_fulltable
-
 };
 
-async function findBydetail_id(id) {
-  return await db("other")
-    .innerJoin("menu_item", "other.menu_id", "menu_item.id")
+// async function findBydetail_id(id) {
+//   return await db("other")
+//     .innerJoin("menu_item", "other.menu_id", "menu_item.id")
 
-    .select(
-      "menu_item.id",
-      "comments",
-      "price",
-      "item_name",
-      "food_rating",
-      "wait_time",
-      "review_id",
-      "date_of_visit",
-      "photo_of_order"
-    )
-    .where("other.menu_id", id);
-}
+//     .select(
+//       "menu_item.id",
+//       "comments",
+//       "price",
+//       "item_name",
+//       "food_rating",
+//       "wait_time",
+//       "review_id",
+//       "date_of_visit",
+//       "photo_of_order"
+//     )
+//     .where("other.menu_id", id);
+// }
 
-async function findBydetail() {
-  return await db("other")
-    .innerJoin("menu_item", "other.menu_id", "menu_item.id")
-    .select(
-      "menu_item.id",
-      "comments",
-      "price",
-      "item_name",
-      "food_rating",
-      "wait_time",
-      "date_of_visit",
-      "photo_of_order"
-    );
-}
+// async function findBydetail() {
+//   return await db("other")
+//     .innerJoin("menu_item", "other.menu_id", "menu_item.id")
+//     .select(
+//       "menu_item.id",
+//       "comments",
+//       "price",
+//       "item_name",
+//       "food_rating",
+//       "wait_time",
+//       "date_of_visit",
+//       "photo_of_order"
+//     );
+// }
 
 async function findMoreId(id) {
   return await db("menu_item_review")
@@ -69,47 +68,72 @@ async function findMoreId(id) {
     )
     .where("menu_item_review.menu_id", id);
 }
-async  function find_review() {
-  return await db("menu_item_review");
+async function find_review() {
+  try {
+    return db("menu_item_review");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-
 async function findById_review(id) {
-  return await db("menu_item_review")
-    .where({ id: Number(id) })
-    .first();
+  try {
+    return db("menu_item_review")
+      .where({ id: Number(id) })
+      .first();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function findById_fulltable(id) {
-  return await db("fulltable")
-    .where({ id: Number(id) })
-    .first();
+  try {
+    return db("fulltable")
+      .where({ id: Number(id) })
+      .first();
+  } catch (error) {
+    console.log(rror);
+  }
 }
 
-
-
-async  function insert_review(user) {
-  return await db("menu_item_review")
-    .insert(user)
-    .then(ids => ({ id: ids[0] }));
+async function insert_review(user) {
+  try {
+    return db("menu_item_review")
+      .insert(user)
+      .then(ids => ({ id: ids[0] }));
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function update_review(id, user) {
-  return await db("menu_item_review")
-    .where("id", Number(id))
-    .update(user);
+  try {
+    return db("menu_item_review")
+      .where("id", Number(id))
+      .update(user);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-async  function remove_review(id) {
-  return await db("menu_item_review")
-    .where("id", Number(id))
-    .del();
+async function remove_review(id) {
+  try {
+    return db("menu_item_review")
+      .where("id", Number(id))
+      .del();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 //menu item
 
 async function find_menu() {
-  return await db("menu_item");
+  try {
+    return db("menu_item");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function findById_menu(id) {
@@ -125,19 +149,19 @@ async function insert_menu(user) {
 }
 
 async function fulltable(user) {
-  return await db("fulltable")
+  await db("fulltable")
     .insert(user)
-    .then(ids => ({ id: ids[0] }));
+    .then(id => ({ id: id[0] }))
+    .catch(err => console.log(err));
 }
 
-
- async function update_menu(id, user) {
+async function update_menu(id, user) {
   return await db("menu_item")
     .where("id", Number(id))
     .update(user);
 }
 
- async function remove_menu(id) {
+async function remove_menu(id) {
   return await db("menu_item")
     .where("id", Number(id))
     .del();
@@ -145,11 +169,11 @@ async function fulltable(user) {
 
 //other
 
- async function find_other() {
+async function find_other() {
   return await db("other");
 }
 
-async function   findById_other(id) {
+async function findById_other(id) {
   return await db("other")
     .where({ id: Number(id) })
     .first();
@@ -171,4 +195,25 @@ async function remove_other(id) {
   return await db("other")
     .where("id", Number(id))
     .del();
+}
+
+async function findBydetail() {
+  return await db("fulltable")
+    .innerJoin("menu_item", "fulltable.menu_id", "menu_item.user_id")
+    .select("*");
+}
+
+async function findBydetail_id(id) {
+  return await db("fulltable")
+    .innerJoin("menu_item", "fulltable.menu_id", "user_id")
+    .join("other", "fulltable.other_id", "other.user_id")
+    .join("menu_item_review", "fulltable.review_id", "menu_item_review.user_id")
+    .select(
+      "menu_item.id",
+      "price",
+      "food_rating",
+      "comments",
+      "restaurant_name"
+    )
+    .where("fulltable.menu_id", id);
 }
