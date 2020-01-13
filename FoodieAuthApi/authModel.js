@@ -19,7 +19,7 @@ module.exports = {
   remove_other,
   update_other,
   fulltable,
-  findById_fulltable
+  findById_fulltable,insert_verify,find_verify
 };
 
 // async function findBydetail_id(id) {
@@ -68,6 +68,26 @@ async function findMoreId(id) {
     )
     .where("menu_item_review.menu_id", id);
 }
+//***************************************** */
+
+async function insert_verify(user) {
+  return await db("verification")
+    .insert(user)
+    .then(ids => ({ id: ids[0] }));
+}
+async function find_verify(id) {
+  try {
+    return db("verification")
+      .where({ id: Number(id) })
+      .first();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//***************************************** */
+
+
 async function find_review() {
   try {
     return db("menu_item_review");

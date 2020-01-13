@@ -38,6 +38,31 @@ const upload = multer({
 
 const router = express.Router();
 
+
+//++++++++++++++++++++++++++++++++++++++++++++
+router.get("/verify/:id", async (req, res) => {
+  let id = req.params.id
+  
+  let data = await db.find_verify(id)
+  try {
+    res.json({ loggedInUser: req.user.username, data  })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+
+
+  router.post("/verify", async (req, res) => {
+    let data = await db.insert_verify(req.body)
+      try {
+        if (!req.body) {
+            res.status(401).res.json({ message: "check your state in your form" });
+          } else {
+           res.status(201).json(data)
+          }
+      } catch (error) {
+        res.status(500).json({message:error})
+      }
+//++++++++++++++++++++++++++++++++++++++++++++
 router.get("/foodie/:id", async (req, res) => {
 let id = req.params.id
 
