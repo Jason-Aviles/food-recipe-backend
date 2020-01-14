@@ -19,9 +19,10 @@ module.exports = {
   remove_other,
   update_other,
   fulltable,
-  findById_fulltable,insert_verify,find_verify
+  findById_fulltable,
+  insert_verify,
+  find_verify
 };
-
 // async function findBydetail_id(id) {
 //   return await db("other")
 //     .innerJoin("menu_item", "other.menu_id", "menu_item.id")
@@ -86,7 +87,6 @@ async function find_verify(id) {
 }
 
 //***************************************** */
-
 
 async function find_review() {
   try {
@@ -225,7 +225,7 @@ async function findBydetail() {
 
 async function findBydetail_id(id) {
   return await db("fulltable")
-    .innerJoin("menu_item", "fulltable.menu_id", "user_id")
+    .innerJoin("menu_item", "fulltable.menu_id", "menu_item.user_id")
     .join("other", "fulltable.other_id", "other.user_id")
     .join("menu_item_review", "fulltable.review_id", "menu_item_review.user_id")
     .select(
@@ -233,7 +233,10 @@ async function findBydetail_id(id) {
       "price",
       "food_rating",
       "comments",
-      "restaurant_name"
+      "item_name",
+      "restaurant_name",
+      "photo_of_order",
+      "food_rating"
     )
     .where("fulltable.menu_id", id);
 }

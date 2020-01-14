@@ -73,12 +73,22 @@ try {
   res.status(500).json({message:error})
 }
 
-
-
-  // return await db
-  //   .findBydetail()
-  //   .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
+
+
+router.get("/foodie/", async (req, res) => {
+  let id = req.params.id
+  
+  let data = await db.findBydetail()
+  try {
+    res.json({ loggedInUser: req.user.username, data  })
+  } catch (error) {
+    res.status(500).json({message:error})
+  }
+  
+  });
+
+
 
 router.get("/", async (req, res) => {
   let data = await  db.find_review()
@@ -126,7 +136,7 @@ router.get("/menu", async (req, res) => {
 
 router.get("/validate/:id", async (req, res) => {
   const { id } = req.params;
-
+console.log(id,"here")
   let data =await  db.findById_fulltable(id)
   try {
     res.json({ loggedInUser: req.user.username, data })
