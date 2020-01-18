@@ -70,7 +70,7 @@ router.post("/", upload.single("photo_of_order"), (req, res) => {
     console.log(req.file);
     db.addPhoto({
       item_name: req.body.item_name,
-      photo_of_order: `http://localhost:8000/uploads/${req.file.filename}`,
+      photo_of_order: `https://foodappapisql.herokuapp.com/uploads/${req.file.filename}`,
       food_rating: req.body.food_rating,
       user_id: req.body.user_id
     })
