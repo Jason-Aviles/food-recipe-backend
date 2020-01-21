@@ -259,6 +259,7 @@ router.post("/menu", async (req, res) => {
 router.post("/other", async (req, res) => {
 
   let data = await db.insert_other(req.body)
+ 
   try {
     if (!req.body) {
         res.status(401).res.json({ message: "check your state in your form" });
@@ -378,7 +379,7 @@ router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const body = req.body;
  
-let update = await db.update_review(id,body)
+let update = await db.update_menu(id,body)
 try {
   if (id) {
          res.status(200).json(update);
@@ -444,9 +445,9 @@ router.put("/menu/:id", async (req, res) => {
 router.put("/other/:id", async (req, res) => {
   const { id } = req.params;
   const body = req.body;
+console.log(body)
 
-
-  let update = await db.update_review(id,body)
+  let update = await db.update_other(id,body)
   try {
     if (id) {
            res.status(200).json(update);
@@ -456,7 +457,7 @@ router.put("/other/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({message:error})
   }
-
+})
 
 
 
@@ -475,7 +476,7 @@ router.put("/other/:id", async (req, res) => {
 //         .status(500)
 //         .json({ error: "The user information could not be modified." });
 //     });
-});
+
 
 //menu
 
