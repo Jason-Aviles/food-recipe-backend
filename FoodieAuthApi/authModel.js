@@ -240,3 +240,13 @@ async function findBydetail_id(id) {
     )
     .where("menu_item.id", id);
 }
+
+
+
+function getAllEntries(id) {
+  const entries = db("entries")
+      .join("children", "entries.children_id","children.id")
+      .join("foods", "entries.food_id", "foods.id")
+      .select("*")  .where("children.id", id);
+  return entries
+}
