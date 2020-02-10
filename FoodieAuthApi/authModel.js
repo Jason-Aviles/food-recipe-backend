@@ -182,9 +182,14 @@ async function update_menu(id, user) {
 }
 
 async function remove_menu(id) {
-  return await db("menu_item")
-    .where("id", Number(id))
-    .del();
+  try {
+      await db("menu_item")
+      .where("id", Number(id))
+    .del()
+  } catch (error) {
+    console.log(error)
+  }
+ 
 }
 
 //other

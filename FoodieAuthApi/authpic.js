@@ -68,6 +68,9 @@ router.post("/", upload.single("photo_of_order"), (req, res) => {
   } else {
     debugger;
     console.log(req.file);
+    if(!req.file.filename){
+      req.file.filename='empty.jpg'
+    }
     db.addPhoto({
       item_name: req.body.item_name,
       photo_of_order: `https://foodappapisql.herokuapp.com/uploads/${req.file.filename}`,

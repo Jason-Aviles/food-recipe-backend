@@ -304,73 +304,58 @@ router.post("/validation", async (req, res) => {
 /////////////////////////del request//////////////////////////////////////
 
 router.delete("/:id", async (req, res) => {
-  const { id } = req.params.id;
+  const { id } = req.params;
 
   let data = await db.remove_review(id)
-  try {
-    if (!id) {
+ if (!id) {
         res.status(401).res.json({ message: "no id" });
-      } else {
-       res.status(201).json(data)
       }
+
+  try {
+    
+       res.status(201).json(data)
+       res.send({message:`deleted review id:${id}`})
   } catch (error) {
     res.status(500).json({message:error})
   }
 
-
-  // if (!id) {
-  // return  res.status(401).res.json({ message: "no id" });
-  // } else {
-  // return  await await db.remove_review(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
-  // }
 });
+
+
 router.delete("/menu/:id", async (req, res) => {
-  const { id } = req.params.id;
+  const { id } = req.params;
 
 
   let data = await db.remove_menu(id)
+   if (!id) {
+        res.status(401).json({ message: "no id" });}
   try {
-    if (!id) {
-        res.status(401).res.json({ message: "no id" });
-      } else {
+   
+      
        res.status(201).json(data)
-      }
+       res.send({message:`deleted menu id:${id}`})
   } catch (error) {
     res.status(500).json({message:error})
   }
 
 
-
-
-//   if (!id) {
-//  return   res.status(401).res.json({ message: "no id" });
-//   } else {
-//   return  await await db.remove_menu(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
-//   }
 });
 
 router.delete("/other/:id", async (req, res) => {
   
-  const { id } = req.params.id;
-
+  const { id } = req.params;
+if (!id) {
+        res.status(401).res.json({ message: "no id" });
+      }
   let data = await db.remove_other(id)
   try {
-    if (!id) {
-        res.status(401).res.json({ message: "no id" });
-      } else {
+     
        res.status(201).json(data)
-      }
+       res.send({message:`deleted other id:${id}`})
   } catch (error) {
     res.status(500).json({message:error})
   }
 
-
-
-  // if (!id) {
-  // return  res.status(401).res.json({ message: "no id" });
-  // } else {
-  //  return await await db.remove_other(id).then(data => res.status(201).res.json(data)).catch(err => console.log(err));
-  // }
 });
 
 /////////////////////////put request//////////////////////////////////////
