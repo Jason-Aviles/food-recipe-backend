@@ -156,7 +156,7 @@ return res.json({message:"email doesnt exist"})
  const hash = bcrypt.hashSync(req.body.password, 14);
   req.body.password = hash;
     
-    res.status(201).json( await db.update_password(email,req.body))
+    res.status(201).json( await db.update_password({email,reset:req.body}))
  
   } catch (error) {
     console.log(error)
