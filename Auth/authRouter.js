@@ -125,17 +125,17 @@ function generateToken(user) {
 router.put("/reset", async (req, res) => {
 let {password,email,username} = req.body
 
- if(await db.findByusername(username) === undefined  ){
- return res.json({message:"user name dosnt exist"})
+ if(await db.findByusername(username) ===null  ){
+ return res.json({message:"username dosnt exist"})
  
  } 
-  if(await db.findByemail(email) ===  null  ){
+  if(await db.findByemail(email) ===  null||await db.findByemail(email) ===  undefined  ){
 return res.json({message:"email doesnt exist"})
 
  } 
  
  
- if (await db.findBy({username:username,email:email})  === undefined){
+ if (await db.findBy({username:username,email:email})  === undefined  ||await db.findBy({username:username,email:email})  === null ){
   res.json({message:"email and user name dont match"})
  }
 
