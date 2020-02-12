@@ -27,14 +27,14 @@ router.post("/register", async (req, res) => {
 
   
   if (await db.findByusername(creds.username)) {
-    return res.status(401).send({
+    return res.status(401).json({
       message: `username ${creds.username} is already created `
     });
   }
 
   // console.log(db.findBy({email:creds.email}).then(user => console.log(user,'here')))
   if (await db.findByemail(creds.email)) {
-    return res.status(401).send({ message: ` email ${creds.email} is already created` });
+    return res.status(401).json({ message: ` email ${creds.email} is already created` });
   }
   const msg = {
     to: creds.email,
@@ -117,17 +117,17 @@ router.put("/reset", async (req, res) => {
 let {password,email,username} = req.body
 
  if(await db.findByusername(username) === undefined  ){
- return res.status(401).send({message:"user name dosnt exist"})
+ return res.status(401).json({message:"user name dosnt exist"})
  
  } 
   if(await db.findByemail(email) ===  null  ){
-return res.status(401).send({message:"email doesnt exist"})
+return res.status(401).json({message:"email doesnt exist"})
 
  } 
  
  
  if (await db.findBy({username:username,email:email})  === undefined){
-  res.status(401).send({message:"email and user name dont match"})
+  res.status(401).json({message:"email and user name dont match"})
  }
 
 
