@@ -19,6 +19,14 @@ async function findByusername(username) {
     .then(row => row);
 }
 
+
+async function findBypassword(password) {
+  return await db("users")
+    .where({ password: password })
+    .first()
+    .then(row => row);
+}
+
 async function findByemail(email) {
   return await db("users")
     .where({ email: email })

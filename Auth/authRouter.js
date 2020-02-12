@@ -70,7 +70,16 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   let { password, username } = req.body;
 
- 
+  if (await db.findByusername(username)) {
+    return res.json({
+      message: `Username ${username} doesnt exist `
+    });
+  }
+
+  // console.log(db.findBy({email:creds.email}).then(user => console.log(user,'here')))
+  if (await db.findBy({password:password,username:username})) {
+    return res.json({ message: ` Wrong password` });
+  }
 
   console.log(req.body);
   if (password && username) {
