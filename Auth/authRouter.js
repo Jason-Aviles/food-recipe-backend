@@ -159,7 +159,7 @@ return res.json({message:"email doesnt exist"})
     res.status(201).json( await db.update_password({email,reset:req.body}))
  
   } catch (error) {
-    console.log(error)
+    res.status(500).json({message:error})
   }
   
 });
