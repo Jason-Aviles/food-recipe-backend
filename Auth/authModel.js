@@ -15,7 +15,8 @@ function findBy(filter) {
 async function findByusername(username) {
   return await db("users")
     .where({ username: username })
-    .then(row => row);
+   
+    .then(row => row)
 }
 
 

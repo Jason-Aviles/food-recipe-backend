@@ -20,22 +20,24 @@ const transporter=nodemailer.createTransport(sendgridTransport({
   }))
 
 router.post("/register", async (req, res) => {
+  
+  // if (await db.findByusername(req.body.username)) {
+  //   return res.json({
+  //     message: `username ${creds.username} is already created `
+  //   });
+  // }
   const creds = req.body;
 
   const hash = bcrypt.hashSync(creds.password, 14);
   creds.password = hash;
 
   
-  if (await db.findByusername(creds.username)) {
-    return res.json({
-      message: `username ${creds.username} is already created `
-    });
-  }
+  
 
   // console.log(db.findBy({email:creds.email}).then(user => console.log(user,'here')))
-  if (await db.findByemail(creds.email)) {
-    return res.json({ message: ` email ${creds.email} is already created` });
-  }
+  // if (await db.findByemail(creds.email)) {
+  //   return res.json({ message: ` email ${creds.email} is already created` });
+  // }
   const msg = {
     to: creds.email,
     from: "sandman2k18@outlook.com",
@@ -45,32 +47,43 @@ router.post("/register", async (req, res) => {
   };
 
   if (creds) {
-    try {
-      //  transporter.sendMail(msg)
-
-      sgMail.send(msg);
-
-      res.status(201).json(db.add(creds));
-      res.sendStatus(msg);
-    } catch (error) {
-      res.status(500).json({ message: error });
-    }
-    //  return await db.add(creds)
-    //     .then(user => {
-    //       res.status(201).json(user);
-    //     })
-    //     .catch(error => {
-    //       res.status(500).json({ message:  error });
-    //     });
+    db.add(creds)
+      .then(user => {
+        sgMail.send(msg);
+        res.status(201).json(user);
+      })
+      .catch(error => {
+        if(error.errno ===1062){
+          res.status(500).json({ message: "duplicate email or username in database" });
+        }
+        res.status(500).json({ message: "failed to add user" });
+      });
   } else {
     res.status(401).json({ message: "missing username and password" });
   }
+  //   try {
+  //     //  transporter.sendMail(msg)
+
+  //     sgMail.send(msg);
+
+  //     res.status(201).json(db.add(creds));
+      
+  //   } catch (error) {
+  //     console.log(error.message.ER_DUP_ENTRY,"hello")
+  //     if(
+  //     error.message.errno===1062){
+  //     return  await res.json({ message: ` duplicate email or username in database` });
+  //     }
+  //  return await res.json({ message:` duplicate email or username in database` });
+      
+  //   }
+    
 });
 
 router.post("/login", async (req, res) => {
   let { password, username } = req.body;
 
-  if (await db.findByusername(username)) {
+  if (await db.findByusername(username)=== null) {
     return res.json({
       message: `Username ${username} doesnt exist `
     });
