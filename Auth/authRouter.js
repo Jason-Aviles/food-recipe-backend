@@ -85,7 +85,7 @@ router.post("/login", async (req, res) => {
   if (password && username) {
     return await db
       .findBy({ username })
-      .first() //takes first item out of object
+      //takes first item out of object
       .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {
           const token = generateToken(user);
@@ -94,7 +94,7 @@ router.post("/login", async (req, res) => {
             .status(200)
             .json({ username: `${user.username}`, token, id: user.id });
         } else {
-          res.status(401).json({ message: "invalid login info" });
+          res.json({ message: "invalid login info" });
         }
       })
       .catch(error => {
