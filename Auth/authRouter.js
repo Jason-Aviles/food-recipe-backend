@@ -27,7 +27,7 @@ router.post("/register", async (req, res) => {
   //   });
   // }
   const creds = req.body;
-
+console.log(creds)
   const hash = bcrypt.hashSync(creds.password, 14);
   creds.password = hash;
 
@@ -83,27 +83,21 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   let { password, username } = req.body;
 
-  if (await db.findByusername(username)=== null) {
-    return res.json({
-      message: `Username ${username} doesnt exist `
-    });
-  }
+ 
 
   // console.log(db.findBy({email:creds.email}).then(user => console.log(user,'here')))
-  if (await db.findBy({password:password,username:username})) {
-    return res.json({ message: ` Wrong password` });
-  }
 
-  console.log(req.body);
+
   if (password && username) {
-    return await db
-      .findBy({ username })
+     await db
+      .findByusername( username )
       //takes first item out of object
       .then(user => {
+        console.log(user)
         if (user && bcrypt.compareSync(password, user.password)) {
           const token = generateToken(user);
 
-          res
+      res
             .status(200)
             .json({ username: `${user.username}`, token, id: user.id });
         } else {

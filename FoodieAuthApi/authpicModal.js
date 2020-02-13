@@ -8,40 +8,40 @@ module.exports = {
   removePhoto,removeAllPhoto
 };
 
-async function getPhoto() {
-  const Photo = await db(`menu_item`);
+ function getPhoto() {
+  const Photo =  db(`menu_item`);
   return Photo;
 }
 
-async function getPhotoById(id) {
-  const Photo = await db(`menu_item`)
+ function getPhotoById(id) {
+  const Photo =  db(`menu_item`)
     .where({ id: Number(id) })
     .first();
   return Photo;
 }
 
-async function addPhoto(photo) {
-  return await db(`menu_item`)
+ function addPhoto(photo) {
+  return  db(`menu_item`)
     .insert(photo)
     .then(ids => ({ id: ids[0] }));
 }
 
-async function updatePhoto(id, comment) {
-  return await db(`menu_item`)
+ function updatePhoto(id, comment) {
+  return  db(`menu_item`)
     .where("id", Number(id))
     .update(comment);
 }
 
-async function removePhoto(id) {
-  return await db(`menu_item`)
+ function removePhoto(id) {
+  return  db(`menu_item`)
     .where("id", Number(id))
     .del();
 }
    
 
 
-async function removeAllPhoto(id) {
-  return await db(`menu_item`)
+ function removeAllPhoto(id) {
+  return  db(`menu_item`)
     .del();
 }
    

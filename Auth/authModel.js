@@ -8,30 +8,37 @@ module.exports = {
 };
 
 function findBy(filter) {
-  return db("users").where(filter).first()
+  return db("users").where(filter)
     .then(row => row);;
 }
+ function findByusername(username) {
 
-async function findByusername(username) {
-  return await db("users")
-    .where({ username: username })
+ 
+  return   db("users")
+    .where({ username: username }).first().then(row => row);;
    
-    .then(row => row)
+
+ 
+  
+  
 }
 
 
 async function findBypassword(password) {
-  return await db("users")
+   await db("users")
     .where({ password: password })
     .first()
     .then(row => row);
 }
 
-async function findByemail(email) {
-  return await db("users")
+ function findByemail(email) {
+
+    return db("users")
     .where({ email: email })
     
     .then(row => row);
+ 
+ 
 }
 
 function add(item) {
@@ -41,8 +48,8 @@ function add(item) {
 }
 
 
-async function update_password(email,password) {
-  return await db("users")
+ function update_password(email,password) {
+  return  db("users")
     .where({email:email})
     .update(password);
 }

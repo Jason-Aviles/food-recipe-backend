@@ -23,8 +23,8 @@ module.exports = {
   insert_verify,
   find_verify
 };
-// async function findBydetail_id(id) {
-//   return await db("other")
+// function findBydetail_id(id) {
+//   return  db("other")
 //     .innerJoin("menu_item", "other.menu_id", "menu_item.id")
 
 //     .select(
@@ -41,8 +41,8 @@ module.exports = {
 //     .where("other.menu_id", id);
 // }
 
-// async function findBydetail() {
-//   return await db("other")
+// function findBydetail() {
+//   return  db("other")
 //     .innerJoin("menu_item", "other.menu_id", "menu_item.id")
 //     .select(
 //       "menu_item.id",
@@ -56,8 +56,8 @@ module.exports = {
 //     );
 // }
 
-async function findMoreId(id) {
-  return await db("menu_item_review")
+function findMoreId(id) {
+  return  db("menu_item_review")
     .innerJoin("menu_item", "menu_item_review.menu_id", "menu_item.id")
     .select(
       "menu_item.id",
@@ -71,12 +71,12 @@ async function findMoreId(id) {
 }
 //***************************************** */
 
-async function insert_verify(user) {
-  return await db("verification")
+function insert_verify(user) {
+  return  db("verification")
     .insert(user)
     .then(ids => ({ id: ids[0] }));
 }
-async function find_verify(id) {
+function find_verify(id) {
   try {
     return db("verification")
       .where({ id: Number(id) })
@@ -88,7 +88,7 @@ async function find_verify(id) {
 
 //***************************************** */
 
-async function find_review() {
+function find_review() {
   try {
     return db("menu_item_review");
   } catch (error) {
@@ -96,7 +96,7 @@ async function find_review() {
   }
 }
 
-async function findById_review(id) {
+function findById_review(id) {
   try {
     return db("menu_item_review")
       .where({ id: Number(id) })
@@ -106,7 +106,7 @@ async function findById_review(id) {
   }
 }
 
-async function findById_fulltable(id) {
+function findById_fulltable(id) {
   try {
     return db("fulltable")
       .where({ id: Number(id) })
@@ -116,7 +116,7 @@ async function findById_fulltable(id) {
   }
 }
 
-async function insert_review(user) {
+function insert_review(user) {
   try {
     return db("menu_item_review")
       .insert(user)
@@ -126,7 +126,7 @@ async function insert_review(user) {
   }
 }
 
-async function update_review(id, user) {
+function update_review(id, user) {
   try {
     return db("menu_item_review")
       .where("id", Number(id))
@@ -136,7 +136,7 @@ async function update_review(id, user) {
   }
 }
 
-async function remove_review(id) {
+function remove_review(id) {
   try {
     return db("menu_item_review")
       .where("id", Number(id))
@@ -148,7 +148,7 @@ async function remove_review(id) {
 
 //menu item
 
-async function find_menu() {
+function find_menu() {
   try {
     return db("menu_item");
   } catch (error) {
@@ -156,34 +156,34 @@ async function find_menu() {
   }
 }
 
-async function findById_menu(id) {
-  return await db("menu_item")
+function findById_menu(id) {
+  return  db("menu_item")
     .where({ id: Number(id) })
     .first();
 }
 
-async function insert_menu(user) {
-  return await db("menu_item")
+function insert_menu(user) {
+  return  db("menu_item")
     .insert(user)
     .then(ids => ({ id: ids[0] }));
 }
 
-async function fulltable(user) {
-  await db("fulltable")
+function fulltable(user) {
+  return db("fulltable")
     .insert(user)
     .then(id => ({ id: id[0] }))
     .catch(err => console.log(err));
 }
 
-async function update_menu(id, user) {
-  return await db("menu_item")
+function update_menu(id, user) {
+  return  db("menu_item")
     .where("id", Number(id))
     .update(user);
 }
 
-async function remove_menu(id) {
+function remove_menu(id) {
   try {
-      await db("menu_item")
+       db("menu_item")
       .where("id", Number(id))
     .del()
   } catch (error) {
@@ -194,42 +194,42 @@ async function remove_menu(id) {
 
 //other
 
-async function find_other() {
-  return await db("other");
+function find_other() {
+  return  db("other");
 }
 
-async function findById_other(id) {
-  return await db("other")
+function findById_other(id) {
+  return  db("other")
     .where({ id: Number(id) })
     .first();
 }
 
-async function insert_other(user) {
-  return await db("other")
+function insert_other(user) {
+  return  db("other")
     .insert(user)
     .then(ids => ({ id: ids[0] }));
 }
 
-async function update_other(id, user) {
-  return await db("other")
+function update_other(id, user) {
+  return  db("other")
     .where("id", Number(id))
     .update(user);
 }
 
-async function remove_other(id) {
-  return await db("other")
+function remove_other(id) {
+  return  db("other")
     .where("id", Number(id))
     .del();
 }
 
-async function findBydetail() {
-  return await db("fulltable")
+function findBydetail() {
+  return  db("fulltable")
     .innerJoin("menu_item", "fulltable.menu_id", "menu_item.user_id")
     .select("*");
 }
 
-async function findBydetail_id(id) {
-  return await db("fulltable")
+function findBydetail_id(id) {
+  return  db("fulltable")
     .innerJoin("menu_item", "fulltable.menu_id", "menu_item.user_id")
     .join("other", "fulltable.other_id", "other.user_id")
     .join("menu_item_review", "fulltable.review_id", "menu_item_review.user_id").first()
