@@ -152,20 +152,19 @@ console.log(id,"here")
 
 
 
-router.get("/foodie/:id", async (req, res) => {
-  const { id } = req.params;
+router.get("/food/:id/:other", async (req, res) => {
+  const { id ,other} = req.params;
 
-  let data =await  db.findBydetail_id(id)
+  let data =await  db.last(id,other)
+ console.log(data)
   try {
-    res.json({ loggedInUser: req.user.username, data })
+    res.json(  data )
   } catch (error) {
+    console.log(error)
     res.status(500).json({message:error})
   }
 
 
-  // return await db
-  //   .findBydetail_id(id)
-  //   .then(data => res.json({ loggedInUser: req.user.username, data })).catch(err => console.log(err));
 });
 
 router.get("/:id", async (req, res) => {
