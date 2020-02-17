@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const multer = require("multer");
-
+const imager = require('multer-imager');
 const db = require("./authpicModal");
 
 const storage = multer.diskStorage({
@@ -12,7 +12,19 @@ const storage = multer.diskStorage({
       null,
       new Date().toISOString().replace(/[-T:\.Z]/g, "") + file.originalname
     );
-  }
+  },                                    //
+  gm: {                                 // [Optional]: define graphicsmagick options
+    width: 200,                         // doc: http://aheckmann.github.io/gm/docs.html#resize
+    height: 200,
+    options: '!',
+    format: 'jpeg'    ,                   // Default: jpg
+    crop: {
+      width: 200,
+      height: 200,
+      x: 0,
+      y: 0
+    }
+  },
 });
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
@@ -22,7 +34,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 const upload = multer({
-  storage: storage,
+  storage: imager(storage),
   limits: { fileSize: 1024 * 1024 * 5 },
   fileFilter: fileFilter
 });
